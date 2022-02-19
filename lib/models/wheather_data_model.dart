@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class WheatherData {
   final double lat;
   final double lon;
