@@ -85,7 +85,7 @@ class _HomePageState extends State<HomePage> {
         await placemarkFromCoordinates(position.latitude, position.longitude);
     // print(placeMark);
     Placemark place = placeMark[0];
-    cityName = place.locality!;
+    cityName = place.subAdministrativeArea! + ",\n" + place.administrativeArea!;
 
     weatherData = await weatherApi.getCurrentWheather(
         position.latitude, position.longitude);
@@ -145,171 +145,159 @@ class _HomePageState extends State<HomePage> {
           future: getWeather(),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              return Column(
-                mainAxisSize: MainAxisSize.max,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Stack(
-                    children: [
-                      Positioned(
-                        child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                                color: Colors.black,
-                                image: DecorationImage(
-                                    opacity: 0.8,
-                                    image: AssetImage(
-                                      weatherImage,
-                                    ),
-                                    fit: BoxFit.fill)),
-                            width: double.infinity,
-                            height: 650,
-                            child: Padding(
-                              padding: const EdgeInsets.only(top: 10.0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.end,
-                                children: [
-                                  Text(
-                                    " ${weatherData.temp.toString()}° ",
-                                    style: const TextStyle(
-                                        fontSize: 44,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white),
-                                  ),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Text(
-                                    cityName,
-                                    style: const TextStyle(
-                                        fontSize: 44,
-                                        fontWeight: FontWeight.normal,
-                                        color: Colors.white),
-                                  ),
-                                  const SizedBox(
-                                    height: 100,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(
-                                          right: 65.0,
-                                        ),
-                                        child: FloatingActionButton(
-                                          elevation: 10,
-                                          backgroundColor: Colors.white,
-                                          onPressed: () {},
-                                          child: const Icon(
-                                            Icons.add,
-                                            color: Color(0xFF1c324b),
-                                            size: 32,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Column(
-                                    children: [
-                                      Container(
-                                        width: double.infinity,
-                                        height: 300,
-                                        decoration: const BoxDecoration(
-                                            image: DecorationImage(
-                                                image: AssetImage(
-                                                  'assets/drawable-xxhdpi/Path 117.png',
-                                                ),
-                                                fit: BoxFit.fill)),
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: [
-                                            Center(
-                                                child: Text(
-                                              weatherData.description,
-                                              style: const TextStyle(
-                                                fontSize: 20,
-                                              ),
-                                            )),
-                                            Image.network(
-                                              weatherData.iconUrl,
-                                              width: 70,
-                                              height: 70,
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(12.0),
-                                              child: Expanded(
-                                                child: Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    Column(
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        Text(
-                                                            'Humidity: ${weatherData.humidity.toString()}%',
-                                                            style: const TextStyle(
-                                                                fontSize: 20,
-                                                                color: Color(
-                                                                    0xFF1c324b))),
-                                                        const SizedBox(
-                                                          height: 5,
-                                                        ),
-                                                        Text(
-                                                            'Wind: ${weatherData.windSpeed.toString()} km/h',
-                                                            style: const TextStyle(
-                                                                fontSize: 20,
-                                                                color: Color(
-                                                                    0xFF1c324b))),
-                                                      ],
-                                                    ),
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                              left: 80.0),
-                                                      child: Column(
-                                                        children: [
-                                                          const Text(
-                                                              'Feels like',
-                                                              style: TextStyle(
-                                                                  fontSize: 20,
-                                                                  color: Color(
-                                                                      0xFF1c324b))),
-                                                          const SizedBox(
-                                                            height: 5,
-                                                          ),
-                                                          Text(
-                                                              "${weatherData.feelsLike.toString()}°",
-                                                              style: const TextStyle(
-                                                                  fontSize: 20,
-                                                                  color: Color(
-                                                                      0xFF1c324b))),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ],
-                                  )
-                                ],
+              return Container(
+                alignment: Alignment.center,
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    image: DecorationImage(
+                        image: AssetImage(weatherImage),
+                        opacity: 0.8,
+                        fit: BoxFit.fill)),
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    Container(
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(),
+                      width: MediaQuery.of(context).size.width,
+                      height: 300,
+                      child: Padding(
+                        padding: const EdgeInsets.only(top: 60),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              " ${weatherData.temp.toString()}° ",
+                              style: const TextStyle(
+                                  fontSize: 44,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Text(
+                              cityName,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                  fontSize: 34, color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                      bottom: 0,
+                      child: Container(
+                        width: MediaQuery.of(context).size.width,
+                        height: 350,
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                                image: AssetImage(
+                                  'assets/drawable-xxhdpi/Path 117.png',
+                                ),
+                                fit: BoxFit.fill)),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Center(
+                                child: Text(
+                              weatherData.description,
+                              style: const TextStyle(
+                                fontSize: 20,
                               ),
                             )),
+                            Image.network(
+                              weatherData.iconUrl,
+                              width: 70,
+                              height: 70,
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(12.0),
+                              child: Expanded(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                            'Humidity: ${weatherData.humidity.toString()}%',
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                color: Color(0xFF1c324b))),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                            'Wind: ${weatherData.windSpeed.toString()} km/h',
+                                            style: const TextStyle(
+                                                fontSize: 20,
+                                                color: Color(0xFF1c324b))),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.only(left: 80.0),
+                                      child: Column(
+                                        children: [
+                                          const Text('Feels like',
+                                              style: TextStyle(
+                                                  fontSize: 20,
+                                                  color: Color(0xFF1c324b))),
+                                          const SizedBox(
+                                            height: 5,
+                                          ),
+                                          Text(
+                                              "${weatherData.feelsLike.toString()}°",
+                                              style: const TextStyle(
+                                                  fontSize: 20,
+                                                  color: Color(0xFF1c324b))),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
                       ),
-                    ],
-                  )
-                ],
+                    ),
+                    Positioned(
+                      right: 60,
+                      bottom: 320,
+                      child: FloatingActionButton(
+                        elevation: 5,
+                        backgroundColor: Colors.white,
+                        onPressed: () async {
+                          Position position = await _determinePosition();
+                          List<Placemark> placeMark =
+                              await placemarkFromCoordinates(
+                                  position.latitude, position.longitude);
+                          // print(placeMark);
+                          Placemark place = placeMark[0];
+                          setState(() {
+                            latLong =
+                                'lat : ${position.latitude} long: ${position.longitude}';
+                            cityName = place.locality!;
+                          });
+                        },
+                        child: const Icon(
+                          Icons.add,
+                          color: Color(0xFF1c324b),
+                          size: 32,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               );
             } else if (snapshot.connectionState == ConnectionState.waiting) {
               return const Center(
@@ -320,42 +308,6 @@ class _HomePageState extends State<HomePage> {
             }
             return Container();
           }),
-      // floatingActionButton: Padding(
-      //   padding: const EdgeInsets.only(right: 35.0, bottom: 265),
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.end,
-      //     children: [
-      //       FloatingActionButton(
-      //         elevation: 8,
-      //         onPressed: () async {
-      //           Position position = await _determinePosition();
-      //           List<Placemark> placeMark = await placemarkFromCoordinates(
-      //               position.latitude, position.longitude);
-      //           // print(placeMark);
-      //           Placemark place = placeMark[0];
-      //           setState(() {
-      //             latLong =
-      //                 'lat : ${position.latitude} long: ${position.longitude}';
-      //             cityName = place.locality!;
-      //           });
-      //         },
-      //         child: const Icon(
-      //           Icons.add,
-      //           color: Color(0xFF1c324b),
-      //           size: 32,
-      //         ),
-      //         backgroundColor: Colors.white,
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
 }
-
-
-//  Image.asset(
-//                 'assets/drawable-xxhdpi/Path 117.png',
-//                 height: MediaQuery.of(context).size.height,
-//                 fit: BoxFit.cover,
-//               )
