@@ -4,6 +4,9 @@ import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:wheather_app/services/weather_api_service.dart';
 import 'package:wheather_app/models/weather_data_model.dart';
+import 'package:wheather_app/views/widgets/circle_button.dart';
+import 'package:wheather_app/views/widgets/string_widget.dart';
+import 'package:wheather_app/views/widgets/text_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -17,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   late WeatherData weatherData;
   String latLong = "sky";
   String cityName = "City";
-  late String weatherImage;
+  String? weatherImage;
 
   Future<Position> _determinePosition() async {
     bool serviceEnabled;
@@ -57,7 +60,6 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getWeather();
   }
@@ -80,15 +82,15 @@ class _HomePageState extends State<HomePage> {
   // }
 
   Future<void> getWeather() async {
-    Position position = await _determinePosition();
+    //Position position = await _determinePosition();
     List<Placemark> placeMark =
-        await placemarkFromCoordinates(position.latitude, position.longitude);
+        await placemarkFromCoordinates(40.783333, 30.400000);
     // print(placeMark);
     Placemark place = placeMark[0];
     cityName = place.subAdministrativeArea! + ",\n" + place.administrativeArea!;
 
-    weatherData = await weatherApi.getCurrentWheather(
-        position.latitude, position.longitude);
+    weatherData = await weatherApi.getCurrentWheather(40.783333, 30.400000);
+    //position.latitude, position.longitude);
 
     if (weatherData.description == "clear sky") {
       weatherImage = 'assets/images/clear_sky.jpg';
@@ -108,6 +110,8 @@ class _HomePageState extends State<HomePage> {
       weatherImage = 'assets/images/snow.jpg';
     } else if (weatherData.description == "mist") {
       weatherImage = 'assets/images/mist.jpg';
+    } else {
+      weatherImage = 'assets/images/rain.jpg';
     }
   }
 
@@ -150,7 +154,7 @@ class _HomePageState extends State<HomePage> {
                 decoration: BoxDecoration(
                     color: Colors.black,
                     image: DecorationImage(
-                        image: AssetImage(weatherImage),
+                        image: AssetImage(weatherImage!),
                         opacity: 0.8,
                         fit: BoxFit.fill)),
                 width: MediaQuery.of(context).size.width,
@@ -158,36 +162,7 @@ class _HomePageState extends State<HomePage> {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    Container(
-                      alignment: Alignment.center,
-                      decoration: const BoxDecoration(),
-                      width: MediaQuery.of(context).size.width,
-                      height: 300,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 60),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              " ${weatherData.temp.toString()}° ",
-                              style: const TextStyle(
-                                  fontSize: 44,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.white),
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Text(
-                              cityName,
-                              textAlign: TextAlign.center,
-                              style: const TextStyle(
-                                  fontSize: 34, color: Colors.white),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    TextWidget(weatherData: weatherData, cityName: cityName),
                     Positioned(
                       bottom: 0,
                       child: Container(
@@ -199,103 +174,69 @@ class _HomePageState extends State<HomePage> {
                                   'assets/drawable-xxhdpi/Path 117.png',
                                 ),
                                 fit: BoxFit.fill)),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Center(
-                                child: Text(
-                              weatherData.description,
-                              style: const TextStyle(
-                                fontSize: 20,
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Center(
+                                  child: StringWidget(
+                                      label: weatherData.description)),
+                              Image.network(
+                                weatherData.iconUrl,
+                                width: 70,
+                                height: 70,
                               ),
-                            )),
-                            Image.network(
-                              weatherData.iconUrl,
-                              width: 70,
-                              height: 70,
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(12.0),
-                              child: Expanded(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                            'Humidity: ${weatherData.humidity.toString()}%',
-                                            style: const TextStyle(
-                                                fontSize: 20,
-                                                color: Color(0xFF1c324b))),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                            'Wind: ${weatherData.windSpeed.toString()} km/h',
-                                            style: const TextStyle(
-                                                fontSize: 20,
-                                                color: Color(0xFF1c324b))),
-                                      ],
-                                    ),
-                                    Padding(
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  StringWidget(
+                                      label:
+                                          'Humidity: ${weatherData.humidity.toString()}%'),
+                                  const StringWidget(
+                                    label: 'Feels like',
+                                  ),
+                                ],
+                              ),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  StringWidget(
+                                      label:
+                                          'Wind: ${weatherData.windSpeed.toString()} km/h'),
+                                  Padding(
                                       padding:
-                                          const EdgeInsets.only(left: 80.0),
-                                      child: Column(
-                                        children: [
-                                          const Text('Feels like',
-                                              style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Color(0xFF1c324b))),
-                                          const SizedBox(
-                                            height: 5,
-                                          ),
-                                          Text(
-                                              "${weatherData.feelsLike.toString()}°",
-                                              style: const TextStyle(
-                                                  fontSize: 20,
-                                                  color: Color(0xFF1c324b))),
-                                        ],
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                          const EdgeInsets.only(right: 10.0),
+                                      child: StringWidget(
+                                          label:
+                                              "${weatherData.feelsLike.toString()}°")),
+                                ],
                               ),
-                            )
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     ),
-                    Positioned(
-                      right: 60,
-                      bottom: 320,
-                      child: FloatingActionButton(
-                        elevation: 5,
-                        backgroundColor: Colors.white,
-                        onPressed: () async {
-                          Position position = await _determinePosition();
-                          List<Placemark> placeMark =
-                              await placemarkFromCoordinates(
-                                  position.latitude, position.longitude);
-                          // print(placeMark);
-                          Placemark place = placeMark[0];
-                          setState(() {
-                            latLong =
-                                'lat : ${position.latitude} long: ${position.longitude}';
-                            cityName = place.locality!;
-                          });
-                        },
-                        child: const Icon(
-                          Icons.add,
-                          color: Color(0xFF1c324b),
-                          size: 32,
-                        ),
-                      ),
-                    ),
+                    CircleButton(
+                      height: 50,
+                      width: 50,
+                      icon: Icons.add,
+                      onTap: () async {
+                        Position position = await _determinePosition();
+                        List<Placemark> placeMark =
+                            await placemarkFromCoordinates(
+                                position.latitude, position.longitude);
+                        // print(placeMark);
+                        Placemark place = placeMark[0];
+                        setState(() {
+                          latLong =
+                              'lat : ${position.latitude} long: ${position.longitude}';
+                          cityName = place.locality!;
+                        });
+                      },
+                    )
                   ],
                 ),
               );
