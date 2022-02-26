@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
-import 'package:wheather_app/services/weather_api_service.dart';
 import 'package:wheather_app/models/weather_data_model.dart';
+import 'package:wheather_app/services/weather_determine.dart';
+import 'package:wheather_app/services/weather_get.dart';
 import 'package:wheather_app/views/widgets/circle_button.dart';
 import 'package:wheather_app/views/widgets/string_widget.dart';
 import 'package:wheather_app/views/widgets/text_widget.dart';
@@ -16,103 +17,17 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  WeatherApi weatherApi = WeatherApi();
+  WeatherGet weatherGet = WeatherGet();
   late WeatherData weatherData;
+  WeatherDetermine weatherDetermine = WeatherDetermine();
   String latLong = "sky";
   String cityName = "City";
   String? weatherImage;
 
-  Future<Position> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      await Geolocator.openLocationSettings();
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission == LocationPermission.denied) {
-        return Future.error('Location permissions are denied');
-      }
-    }
-
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permanently denied, we cannot request permissions.');
-    }
-
-    return await Geolocator.getCurrentPosition();
-  }
-
-  // Future<void> getAdressFromLatLong(Position position) async {
-  //   List<Placemark> placeMark =
-  //       await placemarkFromCoordinates(position.latitude, position.longitude);
-  //   Placemark place = placeMark[0];
-
-  //   setState(() {
-  //     cityName = '${place.name}';
-  //   });
-  // }
-
   @override
   void initState() {
     super.initState();
-    getWeather();
-  }
-
-  // getWheather() async {
-  //   Position position = await _determinePosition();
-  //   List<Placemark> placeMark =
-  //       await placemarkFromCoordinates(position.latitude, position.longitude);
-  //   // print(placeMark);
-  //   Placemark place = placeMark[0];
-
-  //       latLong = 'lat : ${position.latitude} long: ${position.longitude}';
-  //     cityName = place.locality!;
-  //   // setState(() {
-  //   //   latLong = 'lat : ${position.latitude} long: ${position.longitude}';
-  //   //   cityName = place.locality!;
-  //   // });
-
-  //   // wheatherApi.getCurrentWheather(position.latitude, position.longitude);
-  // }
-
-  Future<void> getWeather() async {
-    //Position position = await _determinePosition();
-    List<Placemark> placeMark =
-        await placemarkFromCoordinates(40.783333, 30.400000);
-    // print(placeMark);
-    Placemark place = placeMark[0];
-    cityName = place.subAdministrativeArea! + ",\n" + place.administrativeArea!;
-
-    weatherData = await weatherApi.getCurrentWheather(40.783333, 30.400000);
-    //position.latitude, position.longitude);
-
-    if (weatherData.description == "clear sky") {
-      weatherImage = 'assets/images/clear_sky.jpg';
-    } else if (weatherData.description == "few clouds") {
-      weatherImage = 'assets/images/few_clouds.jpg';
-    } else if (weatherData.description == "scattered clouds") {
-      weatherImage = 'assets/images/scattered_clouds.jpg';
-    } else if (weatherData.description == "broken clouds") {
-      weatherImage = 'assets/images/broken_clouds.jpg';
-    } else if (weatherData.description == "shower rain") {
-      weatherImage = 'assets/images/shower_rain.jpg';
-    } else if (weatherData.description == "rain") {
-      weatherImage = 'assets/images/rain.jpg';
-    } else if (weatherData.description == "thunderstorm") {
-      weatherImage = 'assets/images/thunderstorm.jpg';
-    } else if (weatherData.description == "snow") {
-      weatherImage = 'assets/images/snow.jpg';
-    } else if (weatherData.description == "mist") {
-      weatherImage = 'assets/images/mist.jpg';
-    } else {
-      weatherImage = 'assets/images/rain.jpg';
-    }
+    weatherGet.getWeather();
   }
 
   @override
@@ -146,7 +61,7 @@ class _HomePageState extends State<HomePage> {
         centerTitle: true,
       ),
       body: FutureBuilder(
-          future: getWeather(),
+          future: weatherGet.getWeather(),
           builder: (context, AsyncSnapshot snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               return Container(
@@ -162,7 +77,7 @@ class _HomePageState extends State<HomePage> {
                 child: Stack(
                   fit: StackFit.expand,
                   children: [
-                    TextWidget(weatherData: weatherData, cityName: cityName),
+                    TextWidget(weatherData: weatherData!, cityName: cityName),
                     Positioned(
                       bottom: 0,
                       child: Container(
@@ -181,9 +96,9 @@ class _HomePageState extends State<HomePage> {
                             children: [
                               Center(
                                   child: StringWidget(
-                                      label: weatherData.description)),
+                                      label: weatherData!.description)),
                               Image.network(
-                                weatherData.iconUrl,
+                                weatherData!.iconUrl,
                                 width: 70,
                                 height: 70,
                               ),
@@ -193,7 +108,7 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   StringWidget(
                                       label:
-                                          'Humidity: ${weatherData.humidity.toString()}%'),
+                                          'Humidity: ${weatherData!.humidity.toString()}%'),
                                   const StringWidget(
                                     label: 'Feels like',
                                   ),
@@ -205,13 +120,13 @@ class _HomePageState extends State<HomePage> {
                                 children: [
                                   StringWidget(
                                       label:
-                                          'Wind: ${weatherData.windSpeed.toString()} km/h'),
+                                          'Wind: ${weatherData!.windSpeed.toString()} km/h'),
                                   Padding(
                                       padding:
                                           const EdgeInsets.only(right: 10.0),
                                       child: StringWidget(
                                           label:
-                                              "${weatherData.feelsLike.toString()}°")),
+                                              "${weatherData!.feelsLike.toString()}°")),
                                 ],
                               ),
                             ],
@@ -224,7 +139,8 @@ class _HomePageState extends State<HomePage> {
                       width: 50,
                       icon: Icons.add,
                       onTap: () async {
-                        Position position = await _determinePosition();
+                        Position position =
+                            await weatherDetermine.determinePosition();
                         List<Placemark> placeMark =
                             await placemarkFromCoordinates(
                                 position.latitude, position.longitude);

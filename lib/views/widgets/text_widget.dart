@@ -24,7 +24,7 @@ class TextWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Text(
-              " ${weatherData.temp.toString()}° ",
+              " ${weatherData.temp}° ",
               style: const TextStyle(
                   fontSize: 44,
                   fontWeight: FontWeight.bold,
