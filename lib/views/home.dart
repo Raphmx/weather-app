@@ -77,7 +77,10 @@ class HomePage extends HookConsumerWidget {
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  TextWidget(weatherData: item, cityName: "Ankara"),
+                  TextWidget(
+                      weatherData: item,
+                      cityName:
+                          "${api.locModel!.townName} ${api.locModel!.cityName}"),
                   Positioned(
                     bottom: 0,
                     child: Container(
