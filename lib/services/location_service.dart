@@ -13,8 +13,8 @@ class LocationService {
 
   Future<LocationModel> getLocation() async {
     final location = await loc.Location.instance.getLocation();
-    List<Placemark> place = await placemarkFromCoordinates(
-        40.783333, 30.400000); //location.latitude!, location.longitude!);
+    List<Placemark> place = await placemarkFromCoordinates(location.latitude!,
+        location.longitude!); //location.latitude!, location.longitude!);
     return LocationModel(
         lat: location.latitude,
         long: location.longitude,

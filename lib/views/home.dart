@@ -15,6 +15,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wheather_app/provider/weather_provider.dart';
+import 'package:wheather_app/views/search_view.dart';
 import 'package:wheather_app/views/widgets/circle_button.dart';
 import 'package:wheather_app/views/widgets/string_widget.dart';
 import 'package:wheather_app/views/widgets/text_widget.dart';
@@ -66,21 +67,23 @@ class HomePage extends HookConsumerWidget {
           ? Container(
               alignment: Alignment.center,
               decoration: const BoxDecoration(
-                  color: Colors.black,
                   image: DecorationImage(
                       image: AssetImage(
                           "assets/images/clear_sky.jpg"), //weatherImage!),
-                      opacity: 0.8,
+                      opacity: 0.9,
                       fit: BoxFit.fill)),
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
               child: Stack(
                 fit: StackFit.expand,
                 children: [
-                  TextWidget(
-                      weatherData: item,
-                      cityName:
-                          "${api.locModel!.townName} ${api.locModel!.cityName}"),
+                  Container(
+                    color: Colors.black38,
+                    child: TextWidget(
+                        weatherData: item,
+                        cityName:
+                            "${api.locModel!.townName}, ${api.locModel!.cityName}"),
+                  ),
                   Positioned(
                     bottom: 0,
                     child: Container(
@@ -115,6 +118,9 @@ class HomePage extends HookConsumerWidget {
                                 ),
                               ],
                             ),
+                            const SizedBox(
+                              height: 8,
+                            ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -137,7 +143,14 @@ class HomePage extends HookConsumerWidget {
                     height: 50,
                     width: 50,
                     icon: Icons.add,
-                    onTap: () async {},
+                    onTap: () async {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: ((context) => const SearchView()),
+                        ),
+                      );
+                    },
                   )
                 ],
               ),
