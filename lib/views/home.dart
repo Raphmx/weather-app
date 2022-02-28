@@ -1,24 +1,9 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-// import 'package:geocoding/geocoding.dart';
-// import 'package:geolocator/geolocator.dart';
-// import 'package:wheather_app/models/weather_data_model.dart';
-// import 'package:wheather_app/services/weather_api_service.dart';
-// import 'package:wheather_app/services/weather_determine.dart';
-// import 'package:wheather_app/services/weather_get.dart';
-// import 'package:wheather_app/views/widgets/circle_button.dart';
-// import 'package:wheather_app/views/widgets/string_widget.dart';
-// import 'package:wheather_app/views/widgets/text_widget.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wheather_app/provider/weather_provider.dart';
-import 'package:wheather_app/views/search_view.dart';
-import 'package:wheather_app/views/widgets/circle_button.dart';
-import 'package:wheather_app/views/widgets/string_widget.dart';
-import 'package:wheather_app/views/widgets/text_widget.dart';
+import 'package:wheather_app/views/widgets/row_widget.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -29,6 +14,7 @@ class HomePage extends HookConsumerWidget {
     useEffect(() {
       WidgetsBinding.instance!.addPostFrameCallback((_) async {
         await api.getData();
+        api.getImage();
       });
       return () {};
     }, []);
@@ -37,10 +23,11 @@ class HomePage extends HookConsumerWidget {
 
     return Scaffold(
       appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Color(0xFF1c324b),
-        ),
-        backgroundColor: const Color(0xFF1c324b),
+        // systemOverlayStyle: const SystemUiOverlayStyle(
+        //   statusBarColor: Color(0xFF1c324b),
+        // ),
+        //backgroundColor: const Color(0xFFc0d6e4),
+        elevation: 0,
         leading: IconButton(
           padding: const EdgeInsets.only(left: 8),
           icon: Image.asset(
@@ -55,10 +42,7 @@ class HomePage extends HookConsumerWidget {
           IconButton(
               padding: const EdgeInsets.only(right: 8),
               onPressed: () {},
-              icon: Image.asset(
-                'assets/drawable-xxhdpi/Mask Group 4.png',
-                scale: 2.5,
-              ))
+              icon: const Icon(Icons.search))
         ],
         title: const Text("Weather App"),
         centerTitle: true,
@@ -66,92 +50,126 @@ class HomePage extends HookConsumerWidget {
       body: item != null
           ? Container(
               alignment: Alignment.center,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   image: DecorationImage(
-                      image: AssetImage(
-                          "assets/images/clear_sky.jpg"), //weatherImage!),
+                      image: AssetImage(api.image!),
                       opacity: 0.9,
                       fit: BoxFit.fill)),
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height,
-              child: Stack(
-                fit: StackFit.expand,
+              child: Column(
                 children: [
-                  Container(
-                    color: Colors.black38,
-                    child: TextWidget(
-                        weatherData: item,
-                        cityName:
-                            "${api.locModel!.townName}, ${api.locModel!.cityName}"),
-                  ),
-                  Positioned(
-                    bottom: 0,
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 350,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(
-                                'assets/drawable-xxhdpi/Path 117.png',
+                      width: double.infinity,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 15, vertical: 10),
+                      decoration: BoxDecoration(
+                          color: Colors.white30,
+                          borderRadius: BorderRadius.circular(15)),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            "${item.temp.toInt()}° ",
+                            style: const TextStyle(
+                                fontSize: 44,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white),
+                          ),
+                          const SizedBox(
+                            height: 15,
+                          ),
+                          Text(
+                            "${api.locModel!.townName} ${api.locModel!.cityName!}",
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                                fontSize: 34, color: Colors.white),
+                          ),
+                          Center(
+                            child: Text(
+                              item.description,
+                              style: const TextStyle(
+                                fontSize: 20,
+                                color: Color(0xFF1c324b),
                               ),
-                              fit: BoxFit.fill)),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Center(
-                                child: StringWidget(label: item.description)),
-                            Image.network(
-                              item.iconUrl,
-                              width: 70,
-                              height: 70,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                StringWidget(
-                                    label:
-                                        'Humidity: ${item.humidity.toString()}%'),
-                                const StringWidget(
-                                  label: 'Feels like',
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                StringWidget(
-                                    label:
-                                        'Wind: ${item.windSpeed.toString()} km/h'),
-                                Padding(
-                                    padding: const EdgeInsets.only(right: 10.0),
-                                    child: StringWidget(
-                                        label:
-                                            "${item.feelsLike.toString()}°")),
-                              ],
-                            ),
-                          ],
-                        ),
+                          ),
+                          Image.network(
+                            item.iconUrl,
+                            width: 70,
+                            height: 70,
+                          ),
+                          RowWidget(
+                              leftLabel:
+                                  'Humidity: ${item.humidity.toString()}%',
+                              rightLabel: 'Feels like'),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          RowWidget(
+                              leftLabel:
+                                  'Wind: ${item.windSpeed.toString()} km/h',
+                              rightLabel: "${item.feelsLike.toString()}°")
+                        ],
                       ),
                     ),
                   ),
-                  CircleButton(
-                    height: 50,
-                    width: 50,
-                    icon: Icons.add,
-                    onTap: () async {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: ((context) => const SearchView()),
-                        ),
-                      );
-                    },
-                  )
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: double.infinity,
+                      height: 150,
+                      decoration: BoxDecoration(
+                          color: Colors.white30,
+                          borderRadius: BorderRadius.circular(15)),
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 15,
+                        itemBuilder: (context, index) {
+                          return SizedBox(
+                            width: 60,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("10:00"),
+                                Image.network(item.iconUrl),
+                                const Text("15"),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      width: double.infinity,
+                      height: 150,
+                      decoration: BoxDecoration(
+                          color: Colors.white30,
+                          borderRadius: BorderRadius.circular(15)),
+                      child: ListView.builder(
+                        scrollDirection: Axis.horizontal,
+                        itemCount: 15,
+                        itemBuilder: (context, index) {
+                          return SizedBox(
+                            width: 60,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Text("Bugün"),
+                                Image.network(item.iconUrl),
+                                const Text("15"),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ),
                 ],
               ),
             )

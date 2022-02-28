@@ -13,6 +13,7 @@ class WeatherProvider extends ChangeNotifier {
   final ChangeNotifierProviderRef _ref;
   WeatherData? data;
   LocationModel? locModel;
+  String? image;
   late final WeatherApi _service;
   late final LocationService _locService;
 
@@ -29,6 +30,40 @@ class WeatherProvider extends ChangeNotifier {
       notifyListeners();
     } catch (e) {
       print(e);
+    }
+  }
+
+  String getImage() {
+    if (data!.description == "clear sky") {
+      image = 'assets/images/clear_sky.jpg';
+      return image!;
+    } else if (data!.description == "few clouds") {
+      image = 'assets/images/few_clouds.jpg';
+      return image!;
+    } else if (data!.description == "scattered clouds") {
+      image = 'assets/images/scattered_clouds.jpg';
+      return image!;
+    } else if (data!.description == "broken clouds") {
+      image = 'assets/images/broken_clouds.jpg';
+      return image!;
+    } else if (data!.description == "shower rain") {
+      image = 'assets/images/shower_rain.jpg';
+      return image!;
+    } else if (data!.description == "rain") {
+      image = 'assets/images/rain.jpg';
+      return image!;
+    } else if (data!.description == "thunderstorm") {
+      image = 'assets/images/thunderstorm.jpg';
+      return image!;
+    } else if (data!.description == "snow") {
+      image = 'assets/images/snow.jpg';
+      return image!;
+    } else if (data!.description == "mist") {
+      image = 'assets/images/mist.jpg';
+      return image!;
+    } else {
+      image = 'assets/images/cloudy.jpg';
+      return image!;
     }
   }
 }
