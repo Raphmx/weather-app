@@ -34,35 +34,26 @@ class WeatherProvider extends ChangeNotifier {
   }
 
   String getImage() {
-    if (data!.description == "clear sky") {
-      image = 'assets/images/clear_sky.jpg';
+    if (data!.main == "Thunderstorm") {
+      image = 'assets/images/thunder.jpg';
       return image!;
-    } else if (data!.description == "few clouds") {
-      image = 'assets/images/few_clouds.jpg';
+    } else if (data!.main == "Drizzle") {
+      image = 'assets/images/drizzle.jpg';
       return image!;
-    } else if (data!.description == "scattered clouds") {
-      image = 'assets/images/scattered_clouds.jpg';
-      return image!;
-    } else if (data!.description == "broken clouds") {
-      image = 'assets/images/broken_clouds.jpg';
-      return image!;
-    } else if (data!.description == "shower rain") {
-      image = 'assets/images/shower_rain.jpg';
-      return image!;
-    } else if (data!.description == "rain") {
+    } else if (data!.main == "Rain") {
       image = 'assets/images/rain.jpg';
       return image!;
-    } else if (data!.description == "thunderstorm") {
-      image = 'assets/images/thunderstorm.jpg';
-      return image!;
-    } else if (data!.description == "snow") {
+    } else if (data!.main == "Snow") {
       image = 'assets/images/snow.jpg';
       return image!;
-    } else if (data!.description == "mist") {
-      image = 'assets/images/mist.jpg';
+    } else if (data!.main == "Clear") {
+      image = 'assets/images/clear_sky.jpg';
+      return image!;
+    } else if (data!.main == "Clouds") {
+      image = 'assets/images/cloud.jpg';
       return image!;
     } else {
-      image = 'assets/images/cloudy.jpg';
+      image = 'assets/images/mist.jpg';
       return image!;
     }
   }

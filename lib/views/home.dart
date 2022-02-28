@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wheather_app/provider/weather_provider.dart';
@@ -26,7 +25,7 @@ class HomePage extends HookConsumerWidget {
         // systemOverlayStyle: const SystemUiOverlayStyle(
         //   statusBarColor: Color(0xFF1c324b),
         // ),
-        //backgroundColor: const Color(0xFFc0d6e4),
+        backgroundColor: Color.fromARGB(255, 203, 215, 221),
         elevation: 0,
         leading: IconButton(
           padding: const EdgeInsets.only(left: 8),
@@ -66,13 +65,14 @@ class HomePage extends HookConsumerWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
                       decoration: BoxDecoration(
-                          color: Colors.white30,
+                          color: Colors.white54,
                           borderRadius: BorderRadius.circular(15)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
                             "${item.temp.toInt()}° ",
+                            textAlign: TextAlign.center,
                             style: const TextStyle(
                                 fontSize: 44,
                                 fontWeight: FontWeight.bold,
@@ -87,9 +87,12 @@ class HomePage extends HookConsumerWidget {
                             style: const TextStyle(
                                 fontSize: 34, color: Colors.white),
                           ),
+                          const SizedBox(
+                            height: 10,
+                          ),
                           Center(
                             child: Text(
-                              item.description,
+                              item.main,
                               style: const TextStyle(
                                 fontSize: 20,
                                 color: Color(0xFF1c324b),
@@ -135,7 +138,7 @@ class HomePage extends HookConsumerWidget {
                               children: [
                                 const Text("10:00"),
                                 Image.network(item.iconUrl),
-                                const Text("15"),
+                                const Text("15°"),
                               ],
                             ),
                           );
@@ -162,7 +165,7 @@ class HomePage extends HookConsumerWidget {
                               children: [
                                 const Text("Bugün"),
                                 Image.network(item.iconUrl),
-                                const Text("15"),
+                                const Text("15°"),
                               ],
                             ),
                           );
