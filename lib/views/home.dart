@@ -25,7 +25,7 @@ class HomePage extends HookConsumerWidget {
         // systemOverlayStyle: const SystemUiOverlayStyle(
         //   statusBarColor: Color(0xFF1c324b),
         // ),
-        backgroundColor: Color.fromARGB(255, 203, 215, 221),
+        backgroundColor: const Color.fromARGB(255, 203, 215, 221),
         elevation: 0,
         leading: IconButton(
           padding: const EdgeInsets.only(left: 8),
@@ -71,7 +71,7 @@ class HomePage extends HookConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "${item.temp.toInt()}° ",
+                            "${item.current!.temp!.toInt()}° ",
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                                 fontSize: 44,
@@ -92,29 +92,28 @@ class HomePage extends HookConsumerWidget {
                           ),
                           Center(
                             child: Text(
-                              item.main,
+                              item.current!.weather![0].main!,
                               style: const TextStyle(
                                 fontSize: 20,
                                 color: Color(0xFF1c324b),
                               ),
                             ),
                           ),
-                          Image.network(
-                            item.iconUrl,
-                            width: 70,
-                            height: 70,
-                          ),
+                          // Image.network(
+                          //   item.current!.weather![0].iconUrl,
+                          //   width: 70,
+                          //   height: 70,
+                          // ),
                           RowWidget(
-                              leftLabel:
-                                  'Humidity: ${item.humidity.toString()}%',
+                              leftLabel: 'Humidity: ${item.current!.humidity}%',
                               rightLabel: 'Feels like'),
                           const SizedBox(
                             height: 8,
                           ),
                           RowWidget(
                               leftLabel:
-                                  'Wind: ${item.windSpeed.toString()} km/h',
-                              rightLabel: "${item.feelsLike.toString()}°")
+                                  'Wind: ${item.current!.windSpeed} km/h',
+                              rightLabel: "${item.current!.feelsLike}°")
                         ],
                       ),
                     ),
@@ -137,7 +136,8 @@ class HomePage extends HookConsumerWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text("10:00"),
-                                Image.network(item.iconUrl),
+                                // Image.network(
+                                //     item.current!.weather![0].iconUrl),
                                 const Text("15°"),
                               ],
                             ),
@@ -164,7 +164,8 @@ class HomePage extends HookConsumerWidget {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text("Bugün"),
-                                Image.network(item.iconUrl),
+                                // Image.network(
+                                //     item.current!.weather![0].iconUrl),
                                 const Text("15°"),
                               ],
                             ),

@@ -1,8 +1,9 @@
 import 'dart:convert';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:http/http.dart' as http;
+import 'package:wheather_app/core/print.dart';
+import 'package:wheather_app/models/weather_condition_model.dart';
 import 'package:wheather_app/models/weather_data_model.dart';
-import 'package:wheather_app/print.dart';
 import 'package:wheather_app/services/location_service.dart';
 
 final weatherService = Provider(
@@ -18,7 +19,7 @@ class WeatherApi {
     _location = ref.watch(locationService);
   }
 
-  Future<WeatherData> getCurrentWheather() async {
+  Future<WeatherConditionModel> getCurrentWheather() async {
     final location = await _location.getLocation();
 
     var url = Uri.parse(
@@ -27,7 +28,7 @@ class WeatherApi {
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
       Print.log(jsonEncode(body));
-      return WeatherData.fromJson(body);
+      return WeatherConditionModel.fromJson(body);
     } else {
       throw "can't";
     }

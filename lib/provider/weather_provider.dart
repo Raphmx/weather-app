@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wheather_app/models/location_model.dart';
-import 'package:wheather_app/models/weather_data_model.dart';
+import 'package:wheather_app/models/weather_condition_model.dart';
 import 'package:wheather_app/services/location_service.dart';
 import 'package:wheather_app/services/weather_api_service.dart';
 
@@ -11,7 +11,7 @@ final weatherProvider = ChangeNotifierProvider(
 
 class WeatherProvider extends ChangeNotifier {
   final ChangeNotifierProviderRef _ref;
-  WeatherData? data;
+  WeatherConditionModel? data;
   LocationModel? locModel;
   String? image;
   late final WeatherApi _service;
@@ -34,22 +34,22 @@ class WeatherProvider extends ChangeNotifier {
   }
 
   String getImage() {
-    if (data!.main == "Thunderstorm") {
+    if (data!.current!.weather![0].main == "Thunderstorm") {
       image = 'assets/images/thunder.jpg';
       return image!;
-    } else if (data!.main == "Drizzle") {
+    } else if (data!.current!.weather![0].main == "Drizzle") {
       image = 'assets/images/drizzle.jpg';
       return image!;
-    } else if (data!.main == "Rain") {
+    } else if (data!.current!.weather![0].main == "Rain") {
       image = 'assets/images/rain.jpg';
       return image!;
-    } else if (data!.main == "Snow") {
+    } else if (data!.current!.weather![0].main == "Snow") {
       image = 'assets/images/snow.jpg';
       return image!;
-    } else if (data!.main == "Clear") {
+    } else if (data!.current!.weather![0].main == "Clear") {
       image = 'assets/images/clear_sky.jpg';
       return image!;
-    } else if (data!.main == "Clouds") {
+    } else if (data!.current!.weather![0].main == "Clouds") {
       image = 'assets/images/cloud.jpg';
       return image!;
     } else {
