@@ -21,31 +21,31 @@ class HomePage extends HookConsumerWidget {
     final item = api.data;
 
     return Scaffold(
-      appBar: AppBar(
-        // systemOverlayStyle: const SystemUiOverlayStyle(
-        //   statusBarColor: Color(0xFF1c324b),
-        // ),
-        backgroundColor: const Color.fromARGB(255, 203, 215, 221),
-        elevation: 0,
-        leading: IconButton(
-          padding: const EdgeInsets.only(left: 8),
-          icon: Image.asset(
-            'assets/drawable-xxhdpi/Mask Group 2.png',
-            scale: 2.5,
-          ),
-          onPressed: () {
-            return;
-          },
-        ),
-        actions: [
-          IconButton(
-              padding: const EdgeInsets.only(right: 8),
-              onPressed: () {},
-              icon: const Icon(Icons.search))
-        ],
-        title: const Text("Weather App"),
-        centerTitle: true,
-      ),
+      // appBar: AppBar(
+      //   // systemOverlayStyle: const SystemUiOverlayStyle(
+      //   //   statusBarColor: Color(0xFF1c324b),
+      //   // ),
+      //   backgroundColor: const Color.fromARGB(255, 203, 215, 221),
+      //   elevation: 0,
+      //   leading: IconButton(
+      //     padding: const EdgeInsets.only(left: 8),
+      //     icon: Image.asset(
+      //       'assets/drawable-xxhdpi/Mask Group 2.png',
+      //       scale: 2.5,
+      //     ),
+      //     onPressed: () {
+      //       return;
+      //     },
+      //   ),
+      //   actions: [
+      //     IconButton(
+      //         padding: const EdgeInsets.only(right: 8),
+      //         onPressed: () {},
+      //         icon: const Icon(Icons.search))
+      //   ],
+      //   title: const Text("Weather App"),
+      //   centerTitle: true,
+      // ),
       body: item != null
           ? Container(
               alignment: Alignment.center,
