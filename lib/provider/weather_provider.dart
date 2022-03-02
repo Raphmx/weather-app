@@ -4,6 +4,7 @@ import 'package:wheather_app/models/location_model.dart';
 import 'package:wheather_app/models/weather_condition_model.dart';
 import 'package:wheather_app/services/location_service.dart';
 import 'package:wheather_app/services/weather_api_service.dart';
+import 'package:fluttericon/meteocons_icons.dart';
 
 final weatherProvider = ChangeNotifierProvider(
   (ref) => WeatherProvider(ref),
@@ -14,6 +15,8 @@ class WeatherProvider extends ChangeNotifier {
   WeatherConditionModel? data;
   LocationModel? locModel;
   String? image;
+  IconData? mainIcon;
+
   late final WeatherApi _service;
   late final LocationService _locService;
 
@@ -29,7 +32,7 @@ class WeatherProvider extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      rethrow;
+      print(e);
     }
   }
 
@@ -55,6 +58,31 @@ class WeatherProvider extends ChangeNotifier {
     } else {
       image = 'assets/images/mist.jpg';
       return image!;
+    }
+  }
+
+  IconData getIcon() {
+    if (data!.currently!.weather![0].main == "Thunderstorm") {
+      mainIcon = Meteocons.cloud_flash_inv;
+      return mainIcon!;
+    } else if (data!.currently!.weather![0].main == "Drizzle") {
+      mainIcon = Meteocons.drizzle_inv;
+      return mainIcon!;
+    } else if (data!.currently!.weather![0].main == "Rain") {
+      mainIcon = Meteocons.rain_inv;
+      return mainIcon!;
+    } else if (data!.currently!.weather![0].main == "Snow") {
+      mainIcon = Meteocons.snow_inv;
+      return mainIcon!;
+    } else if (data!.currently!.weather![0].main == "Clear") {
+      mainIcon = Meteocons.sun;
+      return mainIcon!;
+    } else if (data!.currently!.weather![0].main == "Clouds") {
+      mainIcon = Meteocons.cloud_inv;
+      return mainIcon!;
+    } else {
+      mainIcon = Meteocons.mist;
+      return mainIcon!;
     }
   }
 }

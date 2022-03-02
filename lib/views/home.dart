@@ -4,6 +4,7 @@ import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wheather_app/provider/weather_provider.dart';
 import 'package:wheather_app/views/widgets/card_widget.dart';
 import 'package:wheather_app/views/widgets/row_widget.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -15,6 +16,7 @@ class HomePage extends HookConsumerWidget {
       WidgetsBinding.instance!.addPostFrameCallback((_) async {
         await api.getData();
         api.getImage();
+        api.getIcon();
       });
       return () {};
     }, []);
@@ -83,7 +85,7 @@ class HomePage extends HookConsumerWidget {
                             height: 15,
                           ),
                           Text(
-                            "${api.locModel!.townName} ${api.locModel!.cityName!}",
+                            "${api.locModel!.townName!} ${api.locModel!.cityName!}",
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                                 fontSize: 34, color: Colors.white),
@@ -101,13 +103,18 @@ class HomePage extends HookConsumerWidget {
                             ),
                           ),
                           // Image.network(
-                          //   item.current!.weather![0].iconUrl,
+                          //    item.current!.weather![0].iconUrl,
                           //   width: 70,
                           //   height: 70,
                           // ),
+                          Icon(
+                            api.getIcon(),
+                            size: 70,
+                            color: Colors.white,
+                          ),
                           RowWidget(
                               leftLabel:
-                                  'Humidity: ${item.currently!.humidity}%',
+                                  ' Humidity: ${item.currently!.humidity}%',
                               rightLabel: 'Feels like'),
                           const SizedBox(
                             height: 8,

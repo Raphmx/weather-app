@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:fluttericon/meteocons_icons.dart';
 
 class CardWidget extends StatelessWidget {
   const CardWidget({
@@ -42,7 +42,11 @@ class CardWidget extends StatelessWidget {
                 children: [
                   Text(label ?? ""),
                   const SizedBox(height: 5),
-                  const Icon(MdiIcons.weatherCloudy),
+                  const Icon(
+                    // MdiIcons.weatherCloudy,
+                    Meteocons.cloud_flash_inv,
+                    color: Colors.white,
+                  ),
                   const SizedBox(height: 5),
                   Text("$degree°"),
                 ],
