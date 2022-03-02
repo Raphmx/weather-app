@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wheather_app/provider/weather_provider.dart';
+import 'package:wheather_app/views/widgets/card_widget.dart';
 import 'package:wheather_app/views/widgets/row_widget.dart';
 
 class HomePage extends HookConsumerWidget {
@@ -65,7 +66,7 @@ class HomePage extends HookConsumerWidget {
                       padding: const EdgeInsets.symmetric(
                           horizontal: 15, vertical: 10),
                       decoration: BoxDecoration(
-                          color: Colors.white54,
+                          color: Colors.white30.withOpacity(.2),
                           borderRadius: BorderRadius.circular(15)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -119,33 +120,11 @@ class HomePage extends HookConsumerWidget {
                       ),
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      width: double.infinity,
-                      height: 150,
-                      decoration: BoxDecoration(
-                          color: Colors.white30,
-                          borderRadius: BorderRadius.circular(15)),
-                      child: ListView.builder(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: 15,
-                        itemBuilder: (context, index) {
-                          return SizedBox(
-                            width: 60,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text("10:00"),
-                                // Image.network(
-                                //     item.current!.weather![0].iconUrl),
-                                const Text("15°"),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
+                  const CardWidget(
+                    label: "10:00",
+                    degree: 15,
+                    length: 15,
+                    scrollDirection: Axis.horizontal,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
@@ -153,7 +132,7 @@ class HomePage extends HookConsumerWidget {
                       width: double.infinity,
                       height: 150,
                       decoration: BoxDecoration(
-                          color: Colors.white30,
+                          color: Colors.white30.withOpacity(.2),
                           borderRadius: BorderRadius.circular(15)),
                       child: ListView.builder(
                         scrollDirection: Axis.horizontal,
@@ -163,11 +142,11 @@ class HomePage extends HookConsumerWidget {
                             width: 60,
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Text("Bugün"),
+                              children: const [
+                                Text("Bugün"),
                                 // Image.network(
                                 //     item.current!.weather![0].iconUrl),
-                                const Text("15°"),
+                                Text("15°"),
                               ],
                             ),
                           );
