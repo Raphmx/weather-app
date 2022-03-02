@@ -6,10 +6,10 @@ part 'weather_model.g.dart';
 @freezed
 class WeatherModel with _$WeatherModel {
   const factory WeatherModel({
-    final int? id,
-    final String? main,
-    final String? description,
-    final String? icon,
+    int? id,
+    String? main,
+    String? description,
+    String? icon,
   }) = _WeatherModel;
 
   // String get iconUrl {

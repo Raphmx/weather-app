@@ -8,11 +8,12 @@ part 'weather_condition_model.g.dart';
 @freezed
 class WeatherConditionModel with _$WeatherConditionModel {
   const factory WeatherConditionModel({
-    final double? lat,
-    final double? lon,
-    final CurrentlyModel? current,
-    final List<CurrentlyModel>? hourly,
-    final List<DailyModel>? daily,
+    double? lat,
+    double? lon,
+    // ignore: invalid_annotation_target
+    @JsonKey(name: 'current') CurrentlyModel? currently,
+    List<CurrentlyModel>? hourly,
+    List<DailyModel>? daily,
   }) = _WeatherConditionModel;
 
   factory WeatherConditionModel.fromJson(Map<String, dynamic> json) =>

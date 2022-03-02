@@ -6,10 +6,10 @@ part 'feels_like_model.g.dart';
 @freezed
 class FeelsLikeModel with _$FeelsLikeModel {
   const factory FeelsLikeModel({
-    final double? day,
-    final double? night,
-    final double? eve,
-    final double? morn,
+    double? day,
+    double? night,
+    double? eve,
+    double? morn,
   }) = _FeelsLikeModel;
 
   factory FeelsLikeModel.fromJson(Map<String, dynamic> json) =>

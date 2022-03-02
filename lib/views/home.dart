@@ -71,7 +71,7 @@ class HomePage extends HookConsumerWidget {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            "${item.current!.temp!.toInt()}° ",
+                            "${item.currently!.temp!.toInt()}° ",
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                                 fontSize: 44,
@@ -92,7 +92,7 @@ class HomePage extends HookConsumerWidget {
                           ),
                           Center(
                             child: Text(
-                              item.current!.weather![0].main!,
+                              item.currently!.weather![0].main!,
                               style: const TextStyle(
                                 fontSize: 20,
                                 color: Color(0xFF1c324b),
@@ -105,15 +105,16 @@ class HomePage extends HookConsumerWidget {
                           //   height: 70,
                           // ),
                           RowWidget(
-                              leftLabel: 'Humidity: ${item.current!.humidity}%',
+                              leftLabel:
+                                  'Humidity: ${item.currently!.humidity}%',
                               rightLabel: 'Feels like'),
                           const SizedBox(
                             height: 8,
                           ),
                           RowWidget(
                               leftLabel:
-                                  'Wind: ${item.current!.windSpeed} km/h',
-                              rightLabel: "${item.current!.feelsLike}°")
+                                  'Wind: ${item.currently!.windSpeed} km/h',
+                              rightLabel: "${item.currently!.feelsLike}°")
                         ],
                       ),
                     ),

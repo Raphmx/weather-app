@@ -6,6 +6,7 @@ part of 'daily_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+// ignore: non_constant_identifier_names
 _$_DailyModel _$$_DailyModelFromJson(Map<String, dynamic> json) =>
     _$_DailyModel(
       dt: json['dt'] as int?,
@@ -35,6 +36,7 @@ _$_DailyModel _$$_DailyModelFromJson(Map<String, dynamic> json) =>
       uvi: (json['uvi'] as num?)?.toDouble(),
     );
 
+// ignore: non_constant_identifier_names
 Map<String, dynamic> _$$_DailyModelToJson(_$_DailyModel instance) =>
     <String, dynamic>{
       'dt': instance.dt,

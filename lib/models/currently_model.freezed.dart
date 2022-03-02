@@ -189,7 +189,8 @@ class __$CurrentlyModelCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
+@JsonSerializable(fieldRename: FieldRename.snake)
 class _$_CurrentlyModel implements _CurrentlyModel {
   const _$_CurrentlyModel(
       {this.dt,

@@ -6,13 +6,15 @@ part 'currently_model.g.dart';
 
 @freezed
 class CurrentlyModel with _$CurrentlyModel {
+  // ignore: invalid_annotation_target
+  @JsonSerializable(fieldRename: FieldRename.snake)
   const factory CurrentlyModel({
-    final int? dt,
-    final double? temp,
-    final double? feelsLike,
-    final int? humidity,
-    final double? windSpeed,
-    final List<WeatherModel>? weather,
+    int? dt,
+    double? temp,
+    double? feelsLike,
+    int? humidity,
+    double? windSpeed,
+    List<WeatherModel>? weather,
   }) = _CurrentlyModel;
 
   factory CurrentlyModel.fromJson(Map<String, dynamic> json) =>

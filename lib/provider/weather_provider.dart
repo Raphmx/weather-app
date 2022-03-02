@@ -34,22 +34,22 @@ class WeatherProvider extends ChangeNotifier {
   }
 
   String getImage() {
-    if (data!.current!.weather![0].main == "Thunderstorm") {
+    if (data!.currently!.weather![0].main == "Thunderstorm") {
       image = 'assets/images/thunder.jpg';
       return image!;
-    } else if (data!.current!.weather![0].main == "Drizzle") {
+    } else if (data!.currently!.weather![0].main == "Drizzle") {
       image = 'assets/images/drizzle.jpg';
       return image!;
-    } else if (data!.current!.weather![0].main == "Rain") {
+    } else if (data!.currently!.weather![0].main == "Rain") {
       image = 'assets/images/rain.jpg';
       return image!;
-    } else if (data!.current!.weather![0].main == "Snow") {
+    } else if (data!.currently!.weather![0].main == "Snow") {
       image = 'assets/images/snow.jpg';
       return image!;
-    } else if (data!.current!.weather![0].main == "Clear") {
+    } else if (data!.currently!.weather![0].main == "Clear") {
       image = 'assets/images/clear_sky.jpg';
       return image!;
-    } else if (data!.current!.weather![0].main == "Clouds") {
+    } else if (data!.currently!.weather![0].main == "Clouds") {
       image = 'assets/images/cloud.jpg';
       return image!;
     } else {

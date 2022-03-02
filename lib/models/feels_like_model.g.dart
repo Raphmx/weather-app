@@ -6,6 +6,7 @@ part of 'feels_like_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+// ignore: non_constant_identifier_names
 _$_FeelsLikeModel _$$_FeelsLikeModelFromJson(Map<String, dynamic> json) =>
     _$_FeelsLikeModel(
       day: (json['day'] as num?)?.toDouble(),
@@ -14,6 +15,7 @@ _$_FeelsLikeModel _$$_FeelsLikeModelFromJson(Map<String, dynamic> json) =>
       morn: (json['morn'] as num?)?.toDouble(),
     );
 
+// ignore: non_constant_identifier_names
 Map<String, dynamic> _$$_FeelsLikeModelToJson(_$_FeelsLikeModel instance) =>
     <String, dynamic>{
       'day': instance.day,

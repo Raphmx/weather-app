@@ -26,13 +26,13 @@ class _$WeatherConditionModelTearOff {
   _WeatherConditionModel call(
       {double? lat,
       double? lon,
-      CurrentlyModel? current,
+      @JsonKey(name: 'current') CurrentlyModel? currently,
       List<CurrentlyModel>? hourly,
       List<DailyModel>? daily}) {
     return _WeatherConditionModel(
       lat: lat,
       lon: lon,
-      current: current,
+      currently: currently,
       hourly: hourly,
       daily: daily,
     );
@@ -50,7 +50,8 @@ const $WeatherConditionModel = _$WeatherConditionModelTearOff();
 mixin _$WeatherConditionModel {
   double? get lat => throw _privateConstructorUsedError;
   double? get lon => throw _privateConstructorUsedError;
-  CurrentlyModel? get current => throw _privateConstructorUsedError;
+  @JsonKey(name: 'current')
+  CurrentlyModel? get currently => throw _privateConstructorUsedError;
   List<CurrentlyModel>? get hourly => throw _privateConstructorUsedError;
   List<DailyModel>? get daily => throw _privateConstructorUsedError;
 
@@ -68,11 +69,11 @@ abstract class $WeatherConditionModelCopyWith<$Res> {
   $Res call(
       {double? lat,
       double? lon,
-      CurrentlyModel? current,
+      @JsonKey(name: 'current') CurrentlyModel? currently,
       List<CurrentlyModel>? hourly,
       List<DailyModel>? daily});
 
-  $CurrentlyModelCopyWith<$Res>? get current;
+  $CurrentlyModelCopyWith<$Res>? get currently;
 }
 
 /// @nodoc
@@ -88,7 +89,7 @@ class _$WeatherConditionModelCopyWithImpl<$Res>
   $Res call({
     Object? lat = freezed,
     Object? lon = freezed,
-    Object? current = freezed,
+    Object? currently = freezed,
     Object? hourly = freezed,
     Object? daily = freezed,
   }) {
@@ -101,9 +102,9 @@ class _$WeatherConditionModelCopyWithImpl<$Res>
           ? _value.lon
           : lon // ignore: cast_nullable_to_non_nullable
               as double?,
-      current: current == freezed
-          ? _value.current
-          : current // ignore: cast_nullable_to_non_nullable
+      currently: currently == freezed
+          ? _value.currently
+          : currently // ignore: cast_nullable_to_non_nullable
               as CurrentlyModel?,
       hourly: hourly == freezed
           ? _value.hourly
@@ -117,13 +118,13 @@ class _$WeatherConditionModelCopyWithImpl<$Res>
   }
 
   @override
-  $CurrentlyModelCopyWith<$Res>? get current {
-    if (_value.current == null) {
+  $CurrentlyModelCopyWith<$Res>? get currently {
+    if (_value.currently == null) {
       return null;
     }
 
-    return $CurrentlyModelCopyWith<$Res>(_value.current!, (value) {
-      return _then(_value.copyWith(current: value));
+    return $CurrentlyModelCopyWith<$Res>(_value.currently!, (value) {
+      return _then(_value.copyWith(currently: value));
     });
   }
 }
@@ -138,12 +139,12 @@ abstract class _$WeatherConditionModelCopyWith<$Res>
   $Res call(
       {double? lat,
       double? lon,
-      CurrentlyModel? current,
+      @JsonKey(name: 'current') CurrentlyModel? currently,
       List<CurrentlyModel>? hourly,
       List<DailyModel>? daily});
 
   @override
-  $CurrentlyModelCopyWith<$Res>? get current;
+  $CurrentlyModelCopyWith<$Res>? get currently;
 }
 
 /// @nodoc
@@ -161,7 +162,7 @@ class __$WeatherConditionModelCopyWithImpl<$Res>
   $Res call({
     Object? lat = freezed,
     Object? lon = freezed,
-    Object? current = freezed,
+    Object? currently = freezed,
     Object? hourly = freezed,
     Object? daily = freezed,
   }) {
@@ -174,9 +175,9 @@ class __$WeatherConditionModelCopyWithImpl<$Res>
           ? _value.lon
           : lon // ignore: cast_nullable_to_non_nullable
               as double?,
-      current: current == freezed
-          ? _value.current
-          : current // ignore: cast_nullable_to_non_nullable
+      currently: currently == freezed
+          ? _value.currently
+          : currently // ignore: cast_nullable_to_non_nullable
               as CurrentlyModel?,
       hourly: hourly == freezed
           ? _value.hourly
@@ -194,7 +195,11 @@ class __$WeatherConditionModelCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_WeatherConditionModel implements _WeatherConditionModel {
   const _$_WeatherConditionModel(
-      {this.lat, this.lon, this.current, this.hourly, this.daily});
+      {this.lat,
+      this.lon,
+      @JsonKey(name: 'current') this.currently,
+      this.hourly,
+      this.daily});
 
   factory _$_WeatherConditionModel.fromJson(Map<String, dynamic> json) =>
       _$$_WeatherConditionModelFromJson(json);
@@ -204,7 +209,8 @@ class _$_WeatherConditionModel implements _WeatherConditionModel {
   @override
   final double? lon;
   @override
-  final CurrentlyModel? current;
+  @JsonKey(name: 'current')
+  final CurrentlyModel? currently;
   @override
   final List<CurrentlyModel>? hourly;
   @override
@@ -212,7 +218,7 @@ class _$_WeatherConditionModel implements _WeatherConditionModel {
 
   @override
   String toString() {
-    return 'WeatherConditionModel(lat: $lat, lon: $lon, current: $current, hourly: $hourly, daily: $daily)';
+    return 'WeatherConditionModel(lat: $lat, lon: $lon, currently: $currently, hourly: $hourly, daily: $daily)';
   }
 
   @override
@@ -222,7 +228,7 @@ class _$_WeatherConditionModel implements _WeatherConditionModel {
             other is _WeatherConditionModel &&
             const DeepCollectionEquality().equals(other.lat, lat) &&
             const DeepCollectionEquality().equals(other.lon, lon) &&
-            const DeepCollectionEquality().equals(other.current, current) &&
+            const DeepCollectionEquality().equals(other.currently, currently) &&
             const DeepCollectionEquality().equals(other.hourly, hourly) &&
             const DeepCollectionEquality().equals(other.daily, daily));
   }
@@ -232,7 +238,7 @@ class _$_WeatherConditionModel implements _WeatherConditionModel {
       runtimeType,
       const DeepCollectionEquality().hash(lat),
       const DeepCollectionEquality().hash(lon),
-      const DeepCollectionEquality().hash(current),
+      const DeepCollectionEquality().hash(currently),
       const DeepCollectionEquality().hash(hourly),
       const DeepCollectionEquality().hash(daily));
 
@@ -252,7 +258,7 @@ abstract class _WeatherConditionModel implements WeatherConditionModel {
   const factory _WeatherConditionModel(
       {double? lat,
       double? lon,
-      CurrentlyModel? current,
+      @JsonKey(name: 'current') CurrentlyModel? currently,
       List<CurrentlyModel>? hourly,
       List<DailyModel>? daily}) = _$_WeatherConditionModel;
 
@@ -264,7 +270,8 @@ abstract class _WeatherConditionModel implements WeatherConditionModel {
   @override
   double? get lon;
   @override
-  CurrentlyModel? get current;
+  @JsonKey(name: 'current')
+  CurrentlyModel? get currently;
   @override
   List<CurrentlyModel>? get hourly;
   @override

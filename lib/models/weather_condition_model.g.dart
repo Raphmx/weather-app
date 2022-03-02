@@ -6,12 +6,13 @@ part of 'weather_condition_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
+// ignore: non_constant_identifier_names
 _$_WeatherConditionModel _$$_WeatherConditionModelFromJson(
         Map<String, dynamic> json) =>
     _$_WeatherConditionModel(
       lat: (json['lat'] as num?)?.toDouble(),
       lon: (json['lon'] as num?)?.toDouble(),
-      current: json['current'] == null
+      currently: json['current'] == null
           ? null
           : CurrentlyModel.fromJson(json['current'] as Map<String, dynamic>),
       hourly: (json['hourly'] as List<dynamic>?)
@@ -22,12 +23,13 @@ _$_WeatherConditionModel _$$_WeatherConditionModelFromJson(
           .toList(),
     );
 
+// ignore: non_constant_identifier_names
 Map<String, dynamic> _$$_WeatherConditionModelToJson(
         _$_WeatherConditionModel instance) =>
     <String, dynamic>{
       'lat': instance.lat,
       'lon': instance.lon,
-      'current': instance.current,
+      'current': instance.currently,
       'hourly': instance.hourly,
       'daily': instance.daily,
     };
