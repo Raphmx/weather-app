@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:wheather_app/provider/weather_provider.dart';
 import 'package:wheather_app/views/widgets/card_widget.dart';
 import 'package:wheather_app/views/widgets/row_widget.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -167,7 +168,9 @@ class HomePage extends HookConsumerWidget {
                                     ),
                                     //TODO: Humidity Ekle
                                     Row(
-                                      children: [Icon(Meteocons.celcius)],
+                                      children: const [
+                                        FaIcon(FontAwesomeIcons.temperatureLow)
+                                      ],
                                     ),
                                     IconWidget(
                                         main: item.daily![i].weather![0].main!),
@@ -241,8 +244,7 @@ class IconWidget extends StatelessWidget {
                                 child: Icon(
                                   Meteocons.sun_inv,
                                   color: Colors.yellow,
-                                ),
-                              )
+                                ))
                             : const SizedBox(
                                 width: 50,
                                 child: Icon(

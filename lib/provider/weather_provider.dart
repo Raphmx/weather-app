@@ -38,19 +38,19 @@ class WeatherProvider extends ChangeNotifier {
 
   String getImage() {
     if (data!.currently!.weather![0].main == "Thunderstorm") {
-      image = 'assets/images/thunder.jpg';
+      image = 'assets/images/thunderstorm.jpg';
       return image!;
     } else if (data!.currently!.weather![0].main == "Drizzle") {
       image = 'assets/images/drizzle.jpg';
       return image!;
     } else if (data!.currently!.weather![0].main == "Rain") {
-      image = 'assets/images/rain.jpg';
+      image = 'assets/images/rainy.jpg';
       return image!;
     } else if (data!.currently!.weather![0].main == "Snow") {
       image = 'assets/images/snow.jpg';
       return image!;
     } else if (data!.currently!.weather![0].main == "Clear") {
-      image = 'assets/images/clear_sky.jpg';
+      image = 'assets/images/thunderstorm.jpg';
       return image!;
     } else if (data!.currently!.weather![0].main == "Clouds") {
       image = 'assets/images/cloud.jpg';
