@@ -1,10 +1,10 @@
 import 'package:flutter/widgets.dart';
+import 'package:fluttericon/meteocons_icons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:wheather_app/models/location_model.dart';
 import 'package:wheather_app/models/weather_condition_model.dart';
 import 'package:wheather_app/services/location_service.dart';
 import 'package:wheather_app/services/weather_api_service.dart';
-import 'package:fluttericon/meteocons_icons.dart';
 
 final weatherProvider = ChangeNotifierProvider(
   (ref) => WeatherProvider(ref),
@@ -15,8 +15,8 @@ class WeatherProvider extends ChangeNotifier {
   WeatherConditionModel? data;
   LocationModel? locModel;
   String? image;
-  IconData? mainIcon;
 
+  IconData? mainIcon;
   late final WeatherApi _service;
   late final LocationService _locService;
 
@@ -32,7 +32,7 @@ class WeatherProvider extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      print(e);
+      rethrow;
     }
   }
 
@@ -78,7 +78,7 @@ class WeatherProvider extends ChangeNotifier {
       mainIcon = Meteocons.sun;
       return mainIcon!;
     } else if (data!.currently!.weather![0].main == "Clouds") {
-      mainIcon = Meteocons.cloud_inv;
+      mainIcon = Meteocons.clouds_inv;
       return mainIcon!;
     } else {
       mainIcon = Meteocons.mist;

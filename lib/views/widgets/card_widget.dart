@@ -1,59 +1,33 @@
 import 'package:flutter/material.dart';
 import 'package:fluttericon/meteocons_icons.dart';
+import 'package:wheather_app/models/currently_model.dart';
+import 'package:wheather_app/views/home.dart';
 
-class CardWidget extends StatelessWidget {
-  const CardWidget({
+class ContainerWidget extends StatelessWidget {
+  const ContainerWidget({
     Key? key,
-    this.label,
-    this.degree,
-    this.length,
-    this.scrollDirection,
-    this.borderRadius,
-    this.padding,
+    required this.hourly,
+    required this.icon,
+    required this.hour,
   }) : super(key: key);
-  final String? label;
-  final int? degree;
-  final int? length;
-  final Axis? scrollDirection;
-  final double? borderRadius;
-  final EdgeInsetsGeometry? padding;
+
+  final CurrentlyModel hourly;
+  final IconData icon;
+  final String hour;
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
-      child: Container(
-        height: 150,
-        width: double.infinity,
-        padding:
-            padding ?? const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-        decoration: BoxDecoration(
-            color: Colors.white30.withOpacity(.2),
-            borderRadius: BorderRadius.circular(borderRadius ?? 30)),
-        child: ListView.builder(
-          shrinkWrap: true,
-          scrollDirection: scrollDirection ?? Axis.vertical,
-          itemCount: length,
-          itemBuilder: (context, index) {
-            return Container(
-              margin: const EdgeInsets.all(12),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(label ?? ""),
-                  const SizedBox(height: 5),
-                  const Icon(
-                    // MdiIcons.weatherCloudy,
-                    Meteocons.cloud_flash_inv,
-                    color: Colors.white,
-                  ),
-                  const SizedBox(height: 5),
-                  Text("$degree°"),
-                ],
-              ),
-            );
-          },
-        ),
+    return Container(
+      margin: const EdgeInsets.all(12),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(hour),
+          const SizedBox(height: 5),
+          IconWidget(main: hourly.weather![0].main!),
+          const SizedBox(height: 5),
+          Text("${hourly.temp!}°"),
+        ],
       ),
     );
   }
