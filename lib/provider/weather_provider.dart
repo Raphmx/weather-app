@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:fluttericon/meteocons_icons.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:wheather_app/models/location_model.dart';
 import 'package:wheather_app/models/weather_condition_model.dart';
 import 'package:wheather_app/services/location_service.dart';
@@ -50,7 +50,7 @@ class WeatherProvider extends ChangeNotifier {
       image = 'assets/images/snow.jpg';
       return image!;
     } else if (data!.currently!.weather![0].main == "Clear") {
-      image = 'assets/images/thunderstorm.jpg';
+      image = 'assets/images/clear.jpg';
       return image!;
     } else if (data!.currently!.weather![0].main == "Clouds") {
       image = 'assets/images/cloud.jpg';
@@ -63,25 +63,25 @@ class WeatherProvider extends ChangeNotifier {
 
   IconData getIcon() {
     if (data!.currently!.weather![0].main == "Thunderstorm") {
-      mainIcon = Meteocons.cloud_flash_inv;
+      mainIcon = MdiIcons.weatherLightningRainy;
       return mainIcon!;
     } else if (data!.currently!.weather![0].main == "Drizzle") {
-      mainIcon = Meteocons.drizzle_inv;
+      mainIcon = MdiIcons.weatherRainy;
       return mainIcon!;
     } else if (data!.currently!.weather![0].main == "Rain") {
-      mainIcon = Meteocons.rain_inv;
+      mainIcon = MdiIcons.weatherPouring;
       return mainIcon!;
     } else if (data!.currently!.weather![0].main == "Snow") {
-      mainIcon = Meteocons.snow_inv;
+      mainIcon = MdiIcons.weatherSnowyHeavy;
       return mainIcon!;
     } else if (data!.currently!.weather![0].main == "Clear") {
-      mainIcon = Meteocons.sun;
+      mainIcon = MdiIcons.whiteBalanceSunny;
       return mainIcon!;
     } else if (data!.currently!.weather![0].main == "Clouds") {
-      mainIcon = Meteocons.clouds_inv;
+      mainIcon = MdiIcons.weatherCloudy;
       return mainIcon!;
     } else {
-      mainIcon = Meteocons.mist;
+      mainIcon = MdiIcons.weatherFog;
       return mainIcon!;
     }
   }

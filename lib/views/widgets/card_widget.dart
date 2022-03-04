@@ -1,33 +1,54 @@
 import 'package:flutter/material.dart';
-import 'package:fluttericon/meteocons_icons.dart';
 import 'package:wheather_app/models/currently_model.dart';
-import 'package:wheather_app/views/home.dart';
+import 'package:wheather_app/models/daily_model.dart';
+import 'package:wheather_app/views/widgets/daily_widget.dart';
+import 'package:wheather_app/views/widgets/hourly_widget.dart';
 
-class ContainerWidget extends StatelessWidget {
-  const ContainerWidget({
+class CardWidget extends StatelessWidget {
+  const CardWidget({
     Key? key,
-    required this.hourly,
-    required this.icon,
-    required this.hour,
+    this.borderRadius,
+    this.padding,
+    this.scrollDirection = Axis.horizontal,
+    this.hourly,
+    this.daily,
+    this.height,
   }) : super(key: key);
 
-  final CurrentlyModel hourly;
-  final IconData icon;
-  final String hour;
+  final double? borderRadius;
+  final EdgeInsetsGeometry? padding;
+  final Axis scrollDirection;
+  final List<CurrentlyModel>? hourly;
+  final List<DailyModel>? daily;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.all(12),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(hour),
-          const SizedBox(height: 5),
-          IconWidget(main: hourly.weather![0].main!),
-          const SizedBox(height: 5),
-          Text("${hourly.temp!}°"),
-        ],
+    return Padding(
+      padding:
+          padding ?? const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+      child: Container(
+        height: scrollDirection == Axis.horizontal ? height ?? 150 : null,
+        width: double.infinity,
+        padding:
+            padding ?? const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+        decoration: BoxDecoration(
+          color: Colors.white30.withOpacity(.2),
+          borderRadius: BorderRadius.circular(borderRadius ?? 30),
+        ),
+        child: ListView.builder(
+          shrinkWrap: true,
+          physics: const BouncingScrollPhysics(),
+          scrollDirection: scrollDirection,
+          itemCount: hourly != null ? hourly!.length : daily!.length,
+          itemBuilder: (_, i) {
+            return hourly != null
+                ? HourlyWidget(
+                    hourly: hourly![i],
+                  )
+                : DailyWidget(daily: daily![i]);
+          },
+        ),
       ),
     );
   }

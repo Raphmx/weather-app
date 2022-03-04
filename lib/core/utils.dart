@@ -1,15 +1,22 @@
+import 'package:intl/intl.dart';
+
 class Utils {
-  static String formatDate(DateTime date, [String seperator = '.']) {
-    final day = date.day < 10 ? '0${date.day}' : '${date.day}';
-    final month = date.month < 10 ? '0${date.month}' : '${date.month}';
-    final year = date.year < 10 ? '0${date.year}' : '${date.year}';
-    return '$day$seperator$month$seperator$year';
+  static String formatDateTime(int date) {
+    var dateTime = DateTime.fromMillisecondsSinceEpoch(date * 1000);
+    final formattedDay =
+        DateFormat('dd EEE yyyy HH:mm', 'tr_TR').format(dateTime);
+    return formattedDay;
   }
 
-  static String formatDateTime(DateTime date, [String seperator = ':']) {
-    final formattedDate = formatDate(date);
-    final hour = date.hour < 10 ? '0${date.hour}' : '${date.hour}';
-    final minute = date.minute < 10 ? '0${date.minute}' : '${date.minute}';
-    return '$formattedDate $hour$seperator$minute';
+  static String formatDateTimeHour(int date) {
+    var dateTime = DateTime.fromMillisecondsSinceEpoch(date * 1000);
+    var hour = DateFormat.Hm().format(dateTime);
+    return hour;
+  }
+
+  static String formatDateTimeDay(int date) {
+    var dateTime = DateTime.fromMillisecondsSinceEpoch(date * 1000);
+    var day = DateFormat.EEEE('tr_TR').format(dateTime);
+    return day;
   }
 }
