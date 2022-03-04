@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wheather_app/core/styles.dart';
 import 'package:wheather_app/core/utils.dart';
 import 'package:wheather_app/models/daily_model.dart';
 import 'package:wheather_app/views/widgets/icon_widget.dart';
@@ -31,7 +32,7 @@ class DailyWidget extends StatelessWidget {
                     : daily.humidity! > 35
                         ? MdiIcons.waterOpacity
                         : MdiIcons.waterOutline,
-                color: Colors.lightBlue[600],
+                color: Styles.sunYellow,
                 size: 18,
               ),
               Text("%${daily.humidity}"),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wheather_app/core/styles.dart';
 import 'package:wheather_app/core/utils.dart';
 import 'package:wheather_app/models/weather_condition_model.dart';
 import 'package:wheather_app/provider/weather_provider.dart';
@@ -36,13 +37,14 @@ class TopSection extends HookConsumerWidget {
           children: [
             Row(
               children: [
-                const Icon(
+                Icon(
                   MdiIcons.mapMarker,
                   size: 18,
+                  color: Styles.red,
                 ),
                 const SizedBox(width: 5),
                 Text(
-                    "${weather.locModel!.townName!} ${weather.locModel!.cityName!}")
+                    "${weather.locModel!.townName!}, ${weather.locModel!.cityName!}")
               ],
             ),
             Text(
@@ -57,25 +59,25 @@ class TopSection extends HookConsumerWidget {
                     Icon(
                       weather.getIcon(),
                       size: 70,
-                      color: Colors.blue,
+                      color: Styles.blue,
                     ),
-                    Text(
-                      "${model.currently!.temp!.toInt()}° ",
-                      textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          fontSize: 44,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
-                    ),
+                    Text("${model.currently!.temp!.toInt()}° ",
+                        textAlign: TextAlign.center, style: Styles.topStyles()),
                   ],
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     Text("${model.currently!.weather![0].description}"),
+                    const SizedBox(
+                      height: 3,
+                    ),
                     Text(
                         "${model.daily![0].temp!.min}°/${model.daily![0].temp!.max}°"),
-                    Text("Feels Like ${model.currently!.feelsLike}"),
+                    const SizedBox(
+                      height: 3,
+                    ),
+                    Text("Feels like: ${model.currently!.feelsLike}°"),
                   ],
                 )
               ],
