@@ -28,7 +28,7 @@ class HourlyWidget extends StatelessWidget {
           IconWidget(main: hourly.weather![0].main!),
           const SizedBox(height: 5),
           Text(
-            "${hourly.temp!}°",
+            "${hourly.temp!.toInt()}°",
             style: S.textStyles.style,
           ),
           const SizedBox(height: 5),
@@ -41,11 +41,12 @@ class HourlyWidget extends StatelessWidget {
                         ? MdiIcons.waterOpacity
                         : MdiIcons.waterOutline,
                 color: S.colors.lightBlue,
-                size: 18,
+                size: 15,
               ),
               Text(
                 "%${hourly.humidity}",
-                style: S.textStyles.style,
+                style:
+                    const TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
               ),
             ],
           ),

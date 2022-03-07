@@ -35,10 +35,17 @@ class LoadingOverlay extends HookConsumerWidget {
           opacity: 0.5,
         ),
         Center(
-            child: loadingWidget ??
-                const Center(
-                  child: CircularProgressIndicator(),
-                )),
+          child: Container(
+            height: 100,
+            width: 100,
+            color: Colors.black45,
+            child: Center(
+                child: loadingWidget ??
+                    const Center(
+                      child: CircularProgressIndicator(),
+                    )),
+          ),
+        ),
       ],
     );
   }

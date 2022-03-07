@@ -19,8 +19,20 @@ class _Colors {
 
 class _TextStyles {
   final style = const TextStyle(
-    fontSize: 44,
+    fontSize: 14,
     fontWeight: FontWeight.w600,
     color: Colors.black,
+  );
+
+  final title = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    color: S.colors.black,
+  );
+
+  final dayText = TextStyle(
+    fontSize: 15,
+    fontWeight: FontWeight.w600,
+    color: S.colors.black,
   );
 }

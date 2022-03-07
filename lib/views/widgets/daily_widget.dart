@@ -22,7 +22,10 @@ class DailyWidget extends StatelessWidget {
         children: [
           SizedBox(
             width: 100,
-            child: Text(Utils.formatDateTimeDay(daily.dt!)),
+            child: Text(
+              Utils.formatDateTimeDay(daily.dt!),
+              style: S.textStyles.dayText,
+            ),
           ),
           Row(
             children: [
@@ -45,7 +48,7 @@ class DailyWidget extends StatelessWidget {
           SizedBox(
             width: 100,
             child: Text(
-              "${daily.temp!.min}°/${daily.temp!.max}°",
+              "${daily.temp!.min!.toInt()}°/${daily.temp!.max!.toInt()}°",
               textAlign: TextAlign.end,
               style: S.textStyles.style,
             ),

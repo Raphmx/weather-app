@@ -3,9 +3,10 @@ import 'package:material_design_icons_flutter/material_design_icons_flutter.dart
 import 'package:wheather_app/core/styles.dart';
 
 class IconWidget extends StatelessWidget {
-  const IconWidget({Key? key, required this.main}) : super(key: key);
+  const IconWidget({Key? key, required this.main, this.size}) : super(key: key);
 
   final String main;
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +16,7 @@ class IconWidget extends StatelessWidget {
             child: Icon(
               MdiIcons.weatherCloudy,
               color: S.colors.blueGreyColor,
+              size: size ?? 20,
             ),
           )
         : main == "Thunderstorm"
@@ -23,6 +25,7 @@ class IconWidget extends StatelessWidget {
                 child: Icon(
                   MdiIcons.weatherLightningRainy,
                   color: S.colors.blueGreyColor,
+                  size: size ?? 20,
                 ),
               )
             : main == "Drizzle"
@@ -31,6 +34,7 @@ class IconWidget extends StatelessWidget {
                     child: Icon(
                       MdiIcons.weatherRainy,
                       color: S.colors.blueGreyColor,
+                      size: size ?? 20,
                     ),
                   )
                 : main == "Rain"
@@ -39,6 +43,7 @@ class IconWidget extends StatelessWidget {
                         child: Icon(
                           MdiIcons.weatherPouring,
                           color: S.colors.blueGreyColor,
+                          size: size ?? 20,
                         ),
                       )
                     : main == "Snow"
@@ -47,6 +52,7 @@ class IconWidget extends StatelessWidget {
                             child: Icon(
                               MdiIcons.weatherSnowyHeavy,
                               color: S.colors.white,
+                              size: size ?? 20,
                             ),
                           )
                         : main == "Clear"
@@ -55,12 +61,14 @@ class IconWidget extends StatelessWidget {
                                 child: Icon(
                                   MdiIcons.whiteBalanceSunny,
                                   color: S.colors.sunYellow,
+                                  size: size ?? 20,
                                 ))
                             : SizedBox(
                                 width: 50,
                                 child: Icon(
                                   MdiIcons.weatherFog,
                                   color: S.colors.white,
+                                  size: size ?? 20,
                                 ),
                               );
   }
