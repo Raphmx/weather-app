@@ -1,24 +1,12 @@
-// import 'package:flutter/material.dart';
-// import 'package:flutter/services.dart';
-// import 'package:geocoding/geocoding.dart';
-// import 'package:geolocator/geolocator.dart';
-// import 'package:wheather_app/models/weather_data_model.dart';
-// import 'package:wheather_app/services/weather_api_service.dart';
-// import 'package:wheather_app/services/weather_determine.dart';
-// import 'package:wheather_app/services/weather_get.dart';
-// import 'package:wheather_app/views/widgets/circle_button.dart';
-// import 'package:wheather_app/views/widgets/string_widget.dart';
-// import 'package:wheather_app/views/widgets/text_widget.dart';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:wheather_app/provider/location_provider.dart';
 import 'package:wheather_app/provider/weather_provider.dart';
-import 'package:wheather_app/views/search_view.dart';
-import 'package:wheather_app/views/widgets/circle_button.dart';
-import 'package:wheather_app/views/widgets/string_widget.dart';
-import 'package:wheather_app/views/widgets/text_widget.dart';
+import 'package:wheather_app/views/widgets/card_widget.dart';
+import 'package:wheather_app/views/widgets/image_widget.dart';
+import 'package:wheather_app/views/widgets/loading_overlay.dart';
+import 'package:wheather_app/views/widgets/top_section.dart';
 
 class HomePage extends HookConsumerWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -26,136 +14,44 @@ class HomePage extends HookConsumerWidget {
   @override
   Widget build(BuildContext context, ref) {
     final api = ref.watch(weatherProvider);
+
+    final location = ref.watch(locationProvider);
     useEffect(() {
       WidgetsBinding.instance!.addPostFrameCallback((_) async {
         await api.getData();
+
+        await location.getLocation();
       });
       return () {};
     }, []);
 
-    final item = api.data;
-
-    return Scaffold(
-      appBar: AppBar(
-        systemOverlayStyle: const SystemUiOverlayStyle(
-          statusBarColor: Color(0xFF1c324b),
-        ),
-        backgroundColor: const Color(0xFF1c324b),
-        leading: IconButton(
-          padding: const EdgeInsets.only(left: 8),
-          icon: Image.asset(
-            'assets/drawable-xxhdpi/Mask Group 2.png',
-            scale: 2.5,
-          ),
-          onPressed: () {
-            return;
-          },
-        ),
-        actions: [
-          IconButton(
-              padding: const EdgeInsets.only(right: 8),
-              onPressed: () {},
-              icon: Image.asset(
-                'assets/drawable-xxhdpi/Mask Group 4.png',
-                scale: 2.5,
-              ))
-        ],
-        title: const Text("Weather App"),
-        centerTitle: true,
-      ),
-      body: item != null
-          ? Container(
-              alignment: Alignment.center,
-              decoration: const BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage(
-                          "assets/images/clear_sky.jpg"), //weatherImage!),
-                      opacity: 0.9,
-                      fit: BoxFit.fill)),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: Stack(
-                fit: StackFit.expand,
-                children: [
-                  Container(
-                    color: Colors.black38,
-                    child: TextWidget(
-                        weatherData: item,
-                        cityName:
-                            "${api.locModel!.townName}, ${api.locModel!.cityName}"),
-                  ),
-                  Positioned(
-                    bottom: 0,
-                    child: Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: 350,
-                      decoration: const BoxDecoration(
-                          image: DecorationImage(
-                              image: AssetImage(
-                                'assets/drawable-xxhdpi/Path 117.png',
-                              ),
-                              fit: BoxFit.fill)),
+    return LoadingOverlay(
+      child: Scaffold(
+          body: api.data != null && location.locModel != null
+              ? Stack(
+                  children: [
+                    ImageWidget(main: api.data!.currently!.weather![0].main!),
+                    SingleChildScrollView(
                       child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 12.0),
+                        padding: const EdgeInsets.symmetric(vertical: 15.0),
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Center(
-                                child: StringWidget(label: item.description)),
-                            Image.network(
-                              item.iconUrl,
-                              width: 70,
-                              height: 70,
+                            TopSection(
+                                model: api.data!, locModel: location.locModel!),
+                            CardWidget(
+                              hourly: api.data!.hourly,
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                StringWidget(
-                                    label:
-                                        'Humidity: ${item.humidity.toString()}%'),
-                                const StringWidget(
-                                  label: 'Feels like',
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 8,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                StringWidget(
-                                    label:
-                                        'Wind: ${item.windSpeed.toString()} km/h'),
-                                Padding(
-                                    padding: const EdgeInsets.only(right: 10.0),
-                                    child: StringWidget(
-                                        label:
-                                            "${item.feelsLike.toString()}°")),
-                              ],
+                            CardWidget(
+                              daily: api.data!.daily,
+                              scrollDirection: Axis.vertical,
                             ),
                           ],
                         ),
                       ),
                     ),
-                  ),
-                  CircleButton(
-                    height: 50,
-                    width: 50,
-                    icon: Icons.add,
-                    onTap: () async {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: ((context) => const SearchView()),
-                        ),
-                      );
-                    },
-                  )
-                ],
-              ),
-            )
-          : const Center(child: CircularProgressIndicator()),
+                  ],
+                )
+              : const SizedBox()),
     );
   }
 }

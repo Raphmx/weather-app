@@ -5,7 +5,7 @@ class WeatherData {
   final num feelsLike;
   final int humidity;
   final num windSpeed;
-  final String description;
+  final String main;
   final String icon;
 
   String get iconUrl {
@@ -19,7 +19,7 @@ class WeatherData {
       required this.feelsLike,
       required this.humidity,
       required this.windSpeed,
-      required this.description,
+      required this.main,
       required this.icon});
 
   factory WeatherData.fromJson(Map<String, dynamic> json) {
@@ -30,7 +30,7 @@ class WeatherData {
         feelsLike: json["current"]["feels_like"],
         humidity: json["current"]["humidity"],
         windSpeed: json["current"]["wind_speed"],
-        description: json["current"]["weather"][0]["description"],
+        main: json["current"]["weather"][0]["main"],
         icon: json["current"]["weather"][0]["icon"]);
   }
 }

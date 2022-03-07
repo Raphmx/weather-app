@@ -1,32 +1,31 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:wheather_app/models/weather_condition_model.dart';
+import 'package:wheather_app/models/location_model.dart';
 import 'package:wheather_app/provider/state_provider.dart';
-import 'package:wheather_app/services/weather_api_service.dart';
+import 'package:wheather_app/services/location_service.dart';
 
-final weatherProvider = ChangeNotifierProvider(
+final locationProvider = ChangeNotifierProvider(
   (ref) => WeatherProvider(ref),
 );
 
 class WeatherProvider extends ChangeNotifier {
   final ChangeNotifierProviderRef _ref;
-  WeatherConditionModel? data;
-
+  LocationModel? locModel;
   late final StateController<bool> _loading;
-  late final WeatherApi _service;
+
+  late final LocationService _service;
 
   WeatherProvider(this._ref) {
-    _service = _ref.watch(weatherService);
+    _service = _ref.watch(locationService);
     _loading = _ref.watch(loadingProvider.notifier);
   }
 
-  Future<void> getData() async {
+  Future<void> getLocation() async {
     _loading.state = true;
     try {
-      data = await _service.getCurrentWheather();
-
+      locModel = await _service.getLocation();
       notifyListeners();
-    } catch (e) {
+    } catch (_) {
       rethrow;
     }
     _loading.state = false;
