@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wheather_app/core/styles.dart';
 
 class RowWidget extends StatelessWidget {
   const RowWidget({
@@ -16,18 +17,9 @@ class RowWidget extends StatelessWidget {
       children: [
         Text(
           leftLabel,
-          style: const TextStyle(
-            fontSize: 20,
-            color: Color(0xFF1c324b),
-          ),
+          style: S.textStyles.style,
         ),
-        Text(
-          rightLabel,
-          style: const TextStyle(
-            fontSize: 20,
-            color: Color(0xFF1c324b),
-          ),
-        ),
+        Text(rightLabel, style: S.textStyles.style),
       ],
     );
   }

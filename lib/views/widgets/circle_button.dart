@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wheather_app/core/styles.dart';
 
 class CircleButton extends StatelessWidget {
   const CircleButton({
@@ -27,18 +28,18 @@ class CircleButton extends StatelessWidget {
           decoration: BoxDecoration(
             boxShadow: [
               BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
+                color: S.colors.boxShadowColor,
                 spreadRadius: 2,
                 blurRadius: 7,
                 offset: const Offset(0, 4),
               ),
             ],
             shape: BoxShape.circle,
-            color: Colors.white,
+            color: S.colors.white,
           ),
           child: Icon(
             icon, //Icons.add,
-            color: const Color(0xFF1c324b),
+            color: S.colors.darkBlue,
             size: 32,
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wheather_app/core/styles.dart';
 import 'package:wheather_app/core/utils.dart';
 import 'package:wheather_app/models/currently_model.dart';
 import 'package:wheather_app/views/widgets/icon_widget.dart';
@@ -21,11 +22,15 @@ class HourlyWidget extends StatelessWidget {
         children: [
           Text(
             Utils.formatDateTimeHour(hourly.dt!),
+            style: S.textStyles.style,
           ),
           const SizedBox(height: 5),
           IconWidget(main: hourly.weather![0].main!),
           const SizedBox(height: 5),
-          Text("${hourly.temp!}°"),
+          Text(
+            "${hourly.temp!}°",
+            style: S.textStyles.style,
+          ),
           const SizedBox(height: 5),
           Row(
             children: [
@@ -35,10 +40,13 @@ class HourlyWidget extends StatelessWidget {
                     : hourly.humidity! > 35
                         ? MdiIcons.waterOpacity
                         : MdiIcons.waterOutline,
-                color: Colors.lightBlue[600],
+                color: S.colors.lightBlue,
                 size: 18,
               ),
-              Text("%${hourly.humidity}"),
+              Text(
+                "%${hourly.humidity}",
+                style: S.textStyles.style,
+              ),
             ],
           ),
         ],

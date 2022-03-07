@@ -1,35 +1,39 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_hooks/flutter_hooks.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
+import 'package:wheather_app/core/styles.dart';
 import 'package:wheather_app/core/utils.dart';
+import 'package:wheather_app/models/location_model.dart';
 import 'package:wheather_app/models/weather_condition_model.dart';
-import 'package:wheather_app/provider/weather_provider.dart';
+import 'package:wheather_app/views/widgets/icon_widget.dart';
 
-class TopSection extends HookConsumerWidget {
+class TopSection extends StatelessWidget {
   const TopSection({
     Key? key,
     required this.model,
+    required this.locModel,
   }) : super(key: key);
 
   final WeatherConditionModel model;
 
+  final LocationModel locModel;
+
   @override
-  Widget build(BuildContext context, ref) {
-    final weather = ref.watch(weatherProvider);
-    useEffect(() {
-      WidgetsBinding.instance!.addPostFrameCallback((_) async {
-        await weather.getData();
-        weather.getIcon();
-      });
-      return () {};
-    }, []);
+  Widget build(BuildContext context) {
+    //final weather = ref.watch(weatherProvider);
+    // final location = ref.watch(locationProvider);
+    // useEffect(() {
+    //   WidgetsBinding.instance!.addPostFrameCallback((_) async {
+    //     //await weather.getData();
+    //     await location.getLocation();
+    //   });
+    //   return () {};
+    // }, []);
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         decoration: BoxDecoration(
-            color: Colors.white30.withOpacity(.2),
+            color: S.colors.boxShadowColor,
             borderRadius: BorderRadius.circular(30)),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,40 +46,44 @@ class TopSection extends HookConsumerWidget {
                 ),
                 const SizedBox(width: 5),
                 Text(
-                    "${weather.locModel!.townName!} ${weather.locModel!.cityName!}")
+                  "${locModel.townName!} ${locModel.cityName!}",
+                  style: S.textStyles.style,
+                )
               ],
             ),
             Text(
               Utils.formatDateTime(model.currently!.dt!),
               textAlign: TextAlign.start,
+              style: S.textStyles.style,
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Row(
                   children: [
-                    Icon(
-                      weather.getIcon(),
-                      size: 70,
-                      color: Colors.blue,
-                    ),
+                    IconWidget(main: model.currently!.weather![0].main!),
                     Text(
                       "${model.currently!.temp!.toInt()}° ",
                       textAlign: TextAlign.center,
-                      style: const TextStyle(
-                          fontSize: 44,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.black),
+                      style: S.textStyles.style,
                     ),
                   ],
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
-                    Text("${model.currently!.weather![0].description}"),
                     Text(
-                        "${model.daily![0].temp!.min}°/${model.daily![0].temp!.max}°"),
-                    Text("Feels Like ${model.currently!.feelsLike}"),
+                      "${model.currently!.weather![0].description}",
+                      style: S.textStyles.style,
+                    ),
+                    Text(
+                      "${model.daily![0].temp!.min}°/${model.daily![0].temp!.max}°",
+                      style: S.textStyles.style,
+                    ),
+                    Text(
+                      "Feels Like ${model.currently!.feelsLike}",
+                      style: S.textStyles.style,
+                    ),
                   ],
                 )
               ],

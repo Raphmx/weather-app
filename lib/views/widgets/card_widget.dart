@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wheather_app/core/styles.dart';
 import 'package:wheather_app/models/currently_model.dart';
 import 'package:wheather_app/models/daily_model.dart';
 import 'package:wheather_app/views/widgets/daily_widget.dart';
@@ -33,7 +34,7 @@ class CardWidget extends StatelessWidget {
         padding:
             padding ?? const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
         decoration: BoxDecoration(
-          color: Colors.white30.withOpacity(.2),
+          color: S.colors.boxShadowColor,
           borderRadius: BorderRadius.circular(borderRadius ?? 30),
         ),
         child: ListView.builder(
