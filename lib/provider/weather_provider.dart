@@ -27,7 +27,7 @@ class WeatherProvider extends ChangeNotifier {
 
       notifyListeners();
     } catch (e) {
-      rethrow;
+      print(e);
     }
     _loading.state = false;
   }
