@@ -21,7 +21,7 @@ class WeatherApi {
     final location = await _location.getLocation();
 
     var url = Uri.parse(
-        "https://api.openweathermap.org/data/2.5/onecall?lat=${location.lat}&lon=${location.long}&appid=90c8b4d4d3eba7a31b34a1c1a240d4b7");
+        "https://api.openweathermap.org/data/2.5/onecall?lat=${location.lat}&lon=${location.long}&appid");
     var response = await http.get(url);
     if (response.statusCode == 200) {
       var body = jsonDecode(response.body);
